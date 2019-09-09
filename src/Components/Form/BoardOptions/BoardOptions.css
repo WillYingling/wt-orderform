@@ -1,0 +1,19 @@
+.board-options {
+    width: 100%;
+}
+
+#title {
+    width: 90%;
+}
+
+#title u {
+    color: white;
+    font-size: 6vh;
+    margin-bottom: 3vh;
+}
+
+#title input {
+    margin-bottom: 3vh;
+    width: 80%;
+    font-size: 4vh;
+}

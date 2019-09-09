@@ -1,0 +1,45 @@
+.field {
+    font-size: 5vh;
+    text-align: center;
+    margin: 5vh;
+}
+
+.field u {
+    margin-bottom: 20px;
+}
+
+.snowmanfields {
+    color: white;
+    width: 85%;
+    height: 30vh;
+}
+
+.beanieOpts {
+}
+
+.snowmanName {
+    font-size: 100%;
+    width: 100%;
+}
+
+.hats label {
+    font-size: 2vh;
+}
+
+.legend {
+    font-size: 3vh;
+    margin: 1vh;
+}
+
+#namefield {
+    width: 20%;
+}
+
+#hatfield {
+    width: 20%;
+}
+
+#optfields {
+    width: 60%;
+}
+

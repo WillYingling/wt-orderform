@@ -1,0 +1,14 @@
+#greeting-bar {
+    min-height: 40vmin;
+}
+
+#prompt {
+    text-align: center;
+    color: white;
+    font-size: 4vw;
+}
+
+#people-input {
+    width: 75%;
+    font-size: 4vw;
+}
