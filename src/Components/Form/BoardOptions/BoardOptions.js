@@ -26,6 +26,7 @@ class BoardOptions extends Component {
         this.props.addButton(
             {
                 src: paw,
+                id: "dogplus",
                 action: this.addDog,
                 alt: "Add a dog",
             }
@@ -60,13 +61,13 @@ class BoardOptions extends Component {
         const people = [];
         for (var i = 0; i < this.state.size; i++) {
             people.push(
-                <PersonOptions 
+                <PersonOptions
                     key={i}
                     id={i}
                     getOptions={this.props.getOptions}
                     change={this.handlePersonChange}
                 />
-            );            
+            );
         }
 
         return (
@@ -76,7 +77,7 @@ class BoardOptions extends Component {
                     <u> Board Title </u>
                     <input type="text" value={this.state.title} onChange={this.handleTitleChange}/>
                 </div>
-            
+
                 {people}
 
             </div>

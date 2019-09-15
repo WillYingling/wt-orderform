@@ -10,7 +10,7 @@ class PersonOptions extends Component {
             options: {
                 hats: [],
                 brims: [],
-                beanies: [],
+                caps: [],
                 poms: [],
             },
             name: '',
@@ -22,7 +22,7 @@ class PersonOptions extends Component {
         this.handleHatChange = this.handleHatChange.bind(this);
         this.handleOptionChange = this.handleOptionChange.bind(this);
     }
-    
+
     async componentDidMount() {
         let opts = await this.props.getOptions();
         if (opts == null) {
@@ -64,16 +64,16 @@ class PersonOptions extends Component {
 
     handleOptionChange(event) {
         let newPomChoice = this.state.choices.pom;
-        let newBeanieChoice = this.state.choices.beanie;
+        let newCapChoice = this.state.choices.cap;
         let newBrimChoice = this.state.choices.brim;
-        
+
         let selectTag = event.target;
         switch (selectTag.name) {
             case "pom":
                 newPomChoice = selectTag.selectedOptions[0].value;
                 break;
-            case "beanie":
-                newBeanieChoice = selectTag.selectedOptions[0].value;
+            case "cap":
+                newCapChoice = selectTag.selectedOptions[0].value;
                 break;
             case "brim":
                 newBrimChoice = selectTag.selectedOptions[0].value;
@@ -84,7 +84,7 @@ class PersonOptions extends Component {
 
         let choices = {
             pom: newPomChoice,
-            beanie: newBeanieChoice,
+            cap: newCapChoice,
             brim: newBrimChoice,
         };
 
@@ -96,15 +96,15 @@ class PersonOptions extends Component {
     }
 
     render() {
-        const hats = this.state.options.hats.map( (style) => (
-            <label key={style}> 
-                <input 
-                    type="radio" 
+       const hats = this.state.options.hats.map( (style) => (
+            <label key={style}>
+                <input
+                    type="radio"
                     value={style}
                     checked={this.state.choices.hat === style}
                     onChange={this.handleHatChange}
-                /> 
-                {style} 
+                />
+                {style}
             </label>
         ));
 
@@ -115,28 +115,28 @@ class PersonOptions extends Component {
         const brims = this.state.options.brims.map((style) => (
             <option key={style} value={style}> {style} </option>
         ));
-        
-        const beanies = this.state.options.beanies.map((style) => (
+
+        const caps = this.state.options.caps.map((style) => (
             <option key={style} value={style}> {style} </option>
         ));
 
         const beanieChoices = (
-            <div className="beanieOpts alignRow fadeIn">
+            <div className="capOpts alignRow fadeIn">
                 <div className="field alignCol">
-                    <u> Beanie Color </u>
-                    <select 
-                        name="beanie"
+                    <u> Cap Color </u>
+                    <select
+                        name="cap"
                         onChange={this.handleOptionChange}
-                    > 
-                        {beanies} 
+                    >
+                        {caps}
                     </select>
                 </div>
                 <div className="field alignCol">
                     <u> Brim Color </u>
-                    <select 
+                    <select
                         name="brim"
                         onChange={this.handleOptionChange}
-                    > 
+                    >
                         {brims}
                     </select>
                 </div>
@@ -173,7 +173,7 @@ class PersonOptions extends Component {
 
         return (
            <div className="fillparent alignRow center opaque">
-                
+
                <fieldset className="snowmanfields alignRow">
                     <legend className="legend">Person #{this.props.id+1}</legend>
 
@@ -186,14 +186,12 @@ class PersonOptions extends Component {
                         <u> Hat Type </u>
                         {hats}
                     </div>
-                    
+
                     <div id="optfields">
                         {disp}
                     </div>
-
                </fieldset>
-
-           </div >
+           </div>
         );
     }
 }

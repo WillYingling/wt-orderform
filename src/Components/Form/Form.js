@@ -65,7 +65,7 @@ class Form extends Component {
     render() {
         const optsDisp = (
             <BoardOptions
-                getOptions={this.props.getOptions} 
+                getOptions={this.props.getOptions}
                 size={this.props.people}
                 addButton={this.addSidebarButton}
                 removeButton={this.removeSidebarButton}
@@ -76,8 +76,7 @@ class Form extends Component {
         const disp = this.state.isReview ? revDisp : optsDisp;
 
         const buttons = this.state.buttons.map( (button) => (
-            <img 
-                key={button.id}
+            <img key={button.id}
                 src={button.src}
                 id={button.id}
                 alt={button.alt}
