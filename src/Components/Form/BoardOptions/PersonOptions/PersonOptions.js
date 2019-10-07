@@ -6,16 +6,28 @@ class PersonOptions extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            options: {
+        let choices = {}
+        if ( this.props.personState !== undefined ) {
+            this.state = this.props.personState;
+            this.state.options = {
                 hats: [],
                 brims: [],
                 caps: [],
                 poms: [],
-            },
-            name: '',
-            choices: {},
-        };
+            }
+        } else {
+            this.state = {
+                options: {
+                    hats: [],
+                    brims: [],
+                    caps: [],
+                    poms: [],
+                },
+                name: '',
+                choices: choices,
+            };
+        }
+
 
         this.updateParent = this.updateParent.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
@@ -29,15 +41,18 @@ class PersonOptions extends Component {
             return;
         }
 
-        this.setState({
-            options: opts,
-        });
+        this.setState(
+            {
+                options: opts,
+            },
+            this.updateParent,
+        );
     }
 
     updateParent() {
         let person = {
             name: this.state.name,
-            options: this.state.choices,
+            choices: this.state.choices,
         };
 
         this.props.change(this.props.id, person);
@@ -45,21 +60,21 @@ class PersonOptions extends Component {
 
     handleNameChange(event) {
         let name = event.target.value;
-
         this.setState({
-            name: name,
-        });
-
-        this.updateParent();
+                name: name,
+            },
+            this.updateParent,
+        );
     }
 
     handleHatChange(event) {
         this.setState({
-            choices: {
-                hat: event.target.value,
-            }
-        });
-        this.updateParent();
+                choices: {
+                    hat: event.target.value,
+                }
+            },
+            this.updateParent,
+        );
     }
 
     handleOptionChange(event) {
@@ -83,19 +98,21 @@ class PersonOptions extends Component {
         }
 
         let choices = {
+            hat: this.state.choices.hat,
             pom: newPomChoice,
             cap: newCapChoice,
             brim: newBrimChoice,
         };
 
         this.setState({
-            choices: choices,
-        });
-
-        this.updateParent();
+                choices: choices,
+            },
+            this.updateParent,
+        );
     }
 
     render() {
+
        const hats = this.state.options.hats.map( (style) => (
             <label key={style}>
                 <input
@@ -121,30 +138,33 @@ class PersonOptions extends Component {
         ));
 
         const beanieChoices = (
-            <div className="capOpts alignRow fadeIn">
+            <div className="capOpts alignRow fadeIn space-around">
                 <div className="field alignCol">
-                    <u> Cap Color </u>
+                    <u> Cap </u>
                     <select
                         name="cap"
                         onChange={this.handleOptionChange}
+                        value={this.state.choices.cap}
                     >
                         {caps}
                     </select>
                 </div>
                 <div className="field alignCol">
-                    <u> Brim Color </u>
+                    <u> Brim </u>
                     <select
                         name="brim"
                         onChange={this.handleOptionChange}
+                        value={this.state.choices.brim}
                     >
                         {brims}
                     </select>
                 </div>
                 <div className="field alignCol">
-                    <u> Pompom Color </u>
+                    <u> Pompom </u>
                     <select
                         name="pom"
                         onChange={this.handleOptionChange}
+                        value={this.state.choices.pom}
                     >
                         {poms}
                     </select>
@@ -174,12 +194,12 @@ class PersonOptions extends Component {
         return (
            <div className="fillparent alignRow center opaque">
 
-               <fieldset className="snowmanfields alignRow">
+               <div className="snowmanfields alignRow space-around">
                     <legend className="legend">Person #{this.props.id+1}</legend>
 
                     <div id="namefield" className="field alignCol">
                         <u> Name </u>
-                        <input type="text" className="snowmanName"/>
+                        <input type="text" className="snowmanName" value={this.state.name} onChange={this.handleNameChange}/>
                     </div>
 
                     <div id="hatfield" className="field hats alignCol">
@@ -190,7 +210,7 @@ class PersonOptions extends Component {
                     <div id="optfields">
                         {disp}
                     </div>
-               </fieldset>
+               </div>
            </div>
         );
     }

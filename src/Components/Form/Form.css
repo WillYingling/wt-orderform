@@ -34,3 +34,8 @@
     min-height: 100vh;
     height: 100%;
 }
+
+.content-pane {
+    width: 90vw;
+    margin-left: 2vw;
+}

@@ -9,17 +9,25 @@ class BoardOptions extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            size: props.size,
-            peopleOpts: Array(props.size),
-            extras: [],
-            title: 'Merry Christmas!',
-            titleChanged: false,
-        };
+        if ( this.props.boardState !== undefined ) {
+            console.log("Using pre-defined state");
+            console.log( this.props.boardState );
+            this.state = this.props.boardState;
+        } else {
+            console.log("Using default state");
+            this.state = {
+                size: props.size,
+                peopleOpts: Array(props.size),
+                extras: [],
+                title: 'Merry Christmas!',
+                titleChanged: false,
+            };
+        }
 
         this.addDog = this.addDog.bind(this);
         this.handlePersonChange = this.handlePersonChange.bind(this);
         this.handleTitleChange = this.handleTitleChange.bind(this);
+        this.updateParent = this.updateParent.bind(this);
     }
 
     componentDidMount() {
@@ -40,9 +48,12 @@ class BoardOptions extends Component {
     handlePersonChange(i, opts) {
         let newPeopleOpts = this.state.peopleOpts;
         newPeopleOpts[i] = opts;
-        this.setState({
-            peopleOpts: newPeopleOpts,
-        });
+        this.setState(
+            {
+                peopleOpts: newPeopleOpts,
+            },
+            this.updateParent,
+        );
     }
 
     handleTitleChange(event) {
@@ -51,10 +62,17 @@ class BoardOptions extends Component {
             newTitle = '';
         }
 
-        this.setState({
-            title: newTitle,
-            titleChanged: true,
-        });
+        this.setState(
+            {
+                title: newTitle,
+                titleChanged: true,
+            },
+            this.updateParent,
+        );
+    }
+
+    updateParent() {
+        this.props.updateParent( this.state );
     }
 
     render() {
@@ -64,6 +82,7 @@ class BoardOptions extends Component {
                 <PersonOptions
                     key={i}
                     id={i}
+                    personState={this.state.peopleOpts[i]}
                     getOptions={this.props.getOptions}
                     change={this.handlePersonChange}
                 />
@@ -71,7 +90,7 @@ class BoardOptions extends Component {
         }
 
         return (
-            <div className="alignCol board-options" >
+            <div className="alignCol content-pane" >
 
                 <div id="title" className="outlined opaque center alignCol">
                     <u> Board Title </u>

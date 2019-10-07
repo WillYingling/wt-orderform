@@ -38,7 +38,8 @@ class App extends Component {
         let options = null;
 
         try {
-            let serverUrl = "http://localhost:8080/options";
+            //let serverUrl = "http://localhost:8080/options";
+            let serverUrl = "http://" + window.location.hostname + ":8080";
             let jsonReturned = await fetch(serverUrl, {
                 method: "GET"
             });
@@ -55,7 +56,7 @@ class App extends Component {
     render() {
         if (this.state.isForm) {
             return (
-                <Form people={this.state.numPeople} 
+                <Form people={this.state.numPeople}
                     loadGreeting={this.loadGreeting}
                     getOptions={this.getOptions}
                 />

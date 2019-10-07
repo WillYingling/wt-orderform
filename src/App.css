@@ -33,6 +33,16 @@ input {
     justify-content: center;
 }
 
+.space-between {
+    width: 100%;
+    justify-content: space-between;
+}
+
+.space-around {
+    width: 100%;
+    justify-content: space-around;
+}
+
 .outlined {
     text-shadow:
         -1px -1px 0 #000,

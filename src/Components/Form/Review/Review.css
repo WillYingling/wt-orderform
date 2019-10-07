@@ -1,1 +1,30 @@
+div {
+    color: white;
+}
 
+p {
+    font-size:  2vh;
+}
+
+.indented {
+    margin-left: 1vw;
+}
+
+#reviewPane {
+    margin-left: 2vw;
+    width: 90vw;
+}
+
+#submitDiv {
+    width: 100%;
+}
+
+#submitButton {
+    font-size: 3vh;
+    margin: 1vw;
+}
+
+#title {
+    font-size: 6vw;
+    margin-bottom: 3vh;
+}

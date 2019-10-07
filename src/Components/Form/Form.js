@@ -12,14 +12,14 @@ class Form extends Component {
     constructor(props) {
         super(props);
 
+        this.handleBoardChange = this.handleBoardChange.bind(this);
         this.addSidebarButton = this.addSidebarButton.bind(this);
         this.removeSidebarButton = this.removeSidebarButton.bind(this);
-        this.setBackAction = this.setBackAction.bind(this);
-        this.loadReview = this.loadReview.bind(this);
+        this.goBack = this.goBack.bind(this);
+        this.goForward = this.goForward.bind(this);
+        this.submitOrder = this.submitOrder.bind(this);
 
         this.state = {
-            people: Array(props.people).fill(null),
-            backAction: this.props.loadGreeting,
             isReview: false,
         };
 
@@ -27,15 +27,27 @@ class Form extends Component {
             {
                 id: 'backArrow',
                 src: backarrow,
-                action: this.state.backAction,
+                action: this.goBack,
             },
             {
                 id: 'next',
                 src: nextarrow,
-                action: this.loadReview,
+                action: this.goForward,
             },
         ];
 
+    }
+
+    submitOrder() {
+
+    }
+
+    handleBoardChange(state) {
+        this.setState(
+            {
+                boardState: state,
+            }
+        );
     }
 
     removeSidebarButton(id) {
@@ -44,22 +56,45 @@ class Form extends Component {
 
     addSidebarButton(button) {
         let buttons = this.state.buttons;
+        for ( let index = 0; index < buttons.length; index++ ) {
+            if ( buttons[index].id === button.id ) {
+                return;
+            }
+        }
+
         buttons.push(button);
         this.setState({
             buttons: buttons,
         });
     }
 
-    setBackAction(action) {
-        this.setState({
-            backAction: action
-        });
+    goForward() {
+        console.log("Going forward");
+        if ( this.state.isReview ) {
+            this.submitOrder();
+        } else {
+            this.setState(
+                {
+                    isReview: true,
+                },
+            );
+        }
     }
 
-    loadReview() {
-        this.setState({
-            isReview: true,
-        });
+    goBack(action) {
+        console.log("Going back");
+        if ( this.state.isReview ) {
+            console.log("Reloading board options");
+            this.setState(
+                {
+                    isReview: false,
+                }
+            )
+        }
+        else {
+            console.log("Reloading greeting");
+            this.props.loadGreeting();
+        }
     }
 
     render() {
@@ -69,10 +104,15 @@ class Form extends Component {
                 size={this.props.people}
                 addButton={this.addSidebarButton}
                 removeButton={this.removeSidebarButton}
-                loadReview={this.loadReview}
+                updateParent={this.handleBoardChange}
+                boardState={this.state.boardState}
             />
         );
-        const revDisp = (<Review />);
+        const revDisp = (
+            <Review
+                boardOptions={this.state.boardState}
+            />
+        );
         const disp = this.state.isReview ? revDisp : optsDisp;
 
         const buttons = this.state.buttons.map( (button) => (
