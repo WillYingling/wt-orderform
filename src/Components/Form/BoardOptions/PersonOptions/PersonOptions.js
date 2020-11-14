@@ -44,6 +44,9 @@ class PersonOptions extends Component {
         this.setState(
             {
                 options: opts,
+                choices: {
+                    hat: opts.hats[0]
+                }
             },
             this.updateParent,
         );
@@ -71,6 +74,9 @@ class PersonOptions extends Component {
         this.setState({
                 choices: {
                     hat: event.target.value,
+                    pom: this.state.options.poms[0],
+                    cap: this.state.options.caps[0],
+                    brim: this.state.options.brims[0],
                 }
             },
             this.updateParent,

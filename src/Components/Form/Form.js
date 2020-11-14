@@ -17,7 +17,6 @@ class Form extends Component {
         this.removeSidebarButton = this.removeSidebarButton.bind(this);
         this.goBack = this.goBack.bind(this);
         this.goForward = this.goForward.bind(this);
-        this.submitOrder = this.submitOrder.bind(this);
 
         this.state = {
             isReview: false,
@@ -35,10 +34,6 @@ class Form extends Component {
                 action: this.goForward,
             },
         ];
-
-    }
-
-    submitOrder() {
 
     }
 
@@ -111,6 +106,7 @@ class Form extends Component {
         const revDisp = (
             <Review
                 boardOptions={this.state.boardState}
+                submitBoard={this.props.submitBoard}
             />
         );
         const disp = this.state.isReview ? revDisp : optsDisp;

@@ -11,11 +11,39 @@ class Review extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
             boardOptions: this.props.boardOptions,
+            isSubmitted: false,
         };
+
     }
 
-    handleSubmit() {
+    async handleSubmit() {
+        let options = this.state.boardOptions;
 
+        let backendFormat = {
+            Title: options.title,
+            Size: options.size,
+            PeopleOptions: []
+        }
+
+        for ( let i = 0; i < options.size; i++ ) {
+            backendFormat.PeopleOptions.push(
+                {
+                    Name: options.peopleOpts[i].name,
+                    HatType: options.peopleOpts[i].choices.hat,
+                    CapColor: options.peopleOpts[i].choices.cap,
+                    BrimColor: options.peopleOpts[i].choices.brim,
+                    PomColor: options.peopleOpts[i].choices.pom
+                }
+            );
+        }
+
+        console.log( "Submitting: " );
+        console.log( backendFormat );
+
+        let response = await this.props.submitBoard( backendFormat );
+        
+        console.log( "Submitted board, Response: ");
+        console.log(response);
     }
 
     getHatDescription(options) {
@@ -44,12 +72,13 @@ class Review extends Component {
 
     render() {
         let people = this.state.boardOptions.peopleOpts.map( (person,i) => (
-            <p key={i} >
+            <div key={i} >
                 <u> Snowman #{i+1} </u> <br/>
                 Name: {person.name} <br/>
                 {this.getHatDescription(person.choices)}
-            </p>
+            </div>
         ));
+
         return (
             <div className="content-pane opaque">
             <div className="indented" >
