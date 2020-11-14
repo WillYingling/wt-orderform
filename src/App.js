@@ -35,11 +35,11 @@ class App extends Component {
     }
 
     async getOptions() {
+        let serverUrl = "http://" + window.location.hostname + ":8080/options";
         let options = null;
 
         try {
             //let serverUrl = "http://localhost:8080/options";
-            let serverUrl = "http://" + window.location.hostname + ":8080";
             let jsonReturned = await fetch(serverUrl, {
                 method: "GET"
             });
@@ -47,10 +47,29 @@ class App extends Component {
             options = await jsonReturned.json();
 
         } catch (e) {
-            console.log('Error talking to server');
+            console.log('Error getting options: ' + serverUrl);
             console.log(e);
         }
         return options;
+    }
+
+    async submitBoard( options ) {
+        let serverUrl = "http://" + window.location.hostname + ":8080/submit";
+        let response = null;
+
+        try {
+            let jsonReturned = await fetch( serverUrl, {
+                method: "POST",
+                body: JSON.stringify(options)
+            } )
+            response = await jsonReturned.json();
+        }
+        catch( e ) {
+            console.log('Error submitting board: ' + serverUrl)
+            console.log(e);
+        }
+
+        return response;
     }
 
     render() {
@@ -59,6 +78,7 @@ class App extends Component {
                 <Form people={this.state.numPeople}
                     loadGreeting={this.loadGreeting}
                     getOptions={this.getOptions}
+                    submitBoard={this.submitBoard}
                 />
             );
         }
