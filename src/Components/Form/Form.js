@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Review from './Review/Review.js'
 import BoardOptions from './BoardOptions/BoardOptions.js'
 
-import backarrow from '../../images/left.png';
+import prevarrow from '../../images/back.png';
 import nextarrow from '../../images/forward.png';
 
 import './Form.css'
@@ -22,18 +22,7 @@ class Form extends Component {
             isReview: false,
         };
 
-        this.state.buttons = [
-            {
-                id: 'backArrow',
-                src: backarrow,
-                action: this.goBack,
-            },
-            {
-                id: 'next',
-                src: nextarrow,
-                action: this.goForward,
-            },
-        ];
+        this.state.buttons = [];
 
     }
 
@@ -122,13 +111,27 @@ class Form extends Component {
         ));
 
         return (
-            <div className="fullpage ">
-                <div id="display" >
+            <div className="fullpage">
+                <div id="display">
                     {disp}
                 </div>
 
-                <div id="button-bar" className="opaque alignRow space-between yScroll">
+                <div id="button-bar" className="opaque alignRow space-between">
+                    <img src={prevarrow}
+                        id="backarrow"
+                        alt="Go Back"
+                        onClick={this.goBack}
+                        className="button"
+                    />
+
                     {buttons}
+
+                    <img src={nextarrow}
+                        id="nextarrow"
+                        alt="Go Forward"
+                        onClick={this.goForward}
+                        className="button"
+                    />
                 </div>
             </div>
         );

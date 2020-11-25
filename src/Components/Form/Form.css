@@ -4,7 +4,8 @@
 }
 
 .button {
-    width: 4vw;
+    /* 7vh is based on the button bar being 10 vh*/
+    height: 7vh;
     background: none;
     margin: 10px;
 }
@@ -13,16 +14,9 @@
     border: 1px solid white;
 }
 
-#backArrow {
-}
-
-
-#display {
-}
-
 #button-bar {
-    width: 98%;
-    height: 10%;
+    width: 100%;
+    height: 10vh;
 
     position: fixed;
     z-index: 99;

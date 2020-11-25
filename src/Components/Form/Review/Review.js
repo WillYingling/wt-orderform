@@ -72,33 +72,35 @@ class Review extends Component {
 
     render() {
         let people = this.state.boardOptions.peopleOpts.map( (person,i) => (
-            <div key={i} >
-                <u> Snowman #{i+1} </u> <br/>
-                Name: {person.name} <br/>
+            <div key={i} className="alignCol">
+                <u> Snowman #{i+1} </u>
+                Name: {person.name}
                 {this.getHatDescription(person.choices)}
             </div>
         ));
 
         return (
-            <div className="content-pane opaque">
-            <div className="indented" >
-                <div id="title" className="alignCol center">
-                    <u> Review Your Order </u>
-                </div>
+            <div className="content-pane opaque alignCol center">
+                    <div id="title" className="alignCol center">
+                        <u> Review Your Order </u>
+                    </div>
 
-                <h1> <u> Title </u> <br/> {this.state.boardOptions.title} </h1>
+                    <div id="title" className="alignCol center">
+                        {this.state.boardOptions.title}
+                    </div>
 
-                {people}
+                    <div className="alignRow space-around">
+                        {people}
+                    </div>
 
-                <div id="submitDiv" className="alignCol center" >
-                    <button
-                        id="submitButton"
-                        onClick={this.handleSubmit}
-                    >
-                        Submit
-                    </button>
-                </div>
-            </div>
+                    <div id="submitDiv" className="alignCol center" >
+                        <button
+                            id="submitButton"
+                            onClick={this.handleSubmit}
+                        >
+                            Submit
+                        </button>
+                    </div>
             </div>
         );
     }

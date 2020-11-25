@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PersonOptions from './PersonOptions/PersonOptions.js';
-import paw from '../../../images/paw6.png';
+import paw from '../../../images/paw.png';
 
 import './BoardOptions.css';
 

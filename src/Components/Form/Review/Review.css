@@ -25,6 +25,8 @@ p {
 }
 
 #title {
-    font-size: 6vw;
+    width: 100%;
+    height: 10%;
+    font-size: 5vh;
     margin-bottom: 3vh;
 }
