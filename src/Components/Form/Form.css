@@ -1,5 +1,4 @@
 .yScroll {
-    max-width: 100vw;
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -15,27 +14,23 @@
 }
 
 #backArrow {
-    padding-bottom: 3vh;
-    border-bottom: 2px solid white;
 }
 
 
 #display {
-    width: 95vw;
-    height: 100vh;
 }
 
 #button-bar {
-    width: 5%;
-    /*
-    min-width: 5vw;
-    max-width: 5vw;
-    */
-    min-height: 100vh;
-    height: 100%;
+    width: 98%;
+    height: 10%;
+
+    position: fixed;
+    z-index: 99;
+    bottom: 0;
+    left: 0;
 }
 
 .content-pane {
-    width: 90vw;
-    margin-left: 2vw;
+    width: 100%;
+    margin-bottom: 10vh;
 }

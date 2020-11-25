@@ -122,16 +122,14 @@ class Form extends Component {
         ));
 
         return (
-            <div className="fullpage alignRow">
-
-                <div id="button-bar" className="opaque alignCol">
-                    {buttons}
-                </div>
-
+            <div className="fullpage ">
                 <div id="display" >
                     {disp}
                 </div>
 
+                <div id="button-bar" className="opaque alignRow space-between yScroll">
+                    {buttons}
+                </div>
             </div>
         );
     }

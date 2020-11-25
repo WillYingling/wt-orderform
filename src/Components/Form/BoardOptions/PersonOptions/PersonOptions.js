@@ -198,9 +198,9 @@ class PersonOptions extends Component {
         }
 
         return (
-           <div className="fillparent alignRow center opaque">
+           <div className="snowmanfields alignRow center opaque">
 
-               <div className="snowmanfields alignRow space-around">
+               <div className="alignRow space-around">
                     <legend className="legend">Person #{this.props.id+1}</legend>
 
                     <div id="namefield" className="field alignCol">
