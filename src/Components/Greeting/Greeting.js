@@ -8,11 +8,11 @@ class Greeting extends Component {
 
         this.state = {
             people: "",
-            error: "",
         };
 
         this.handleChange = this.handleChange.bind(this);
         this.onEnter = this.onEnter.bind(this);
+        this.setError = this.setError.bind(this);
     }
 
     componentDidMount() {
@@ -23,35 +23,45 @@ class Greeting extends Component {
         document.removeEventListener("keydown", this.onEnter, false);
     }
 
+    setError( errString ) {
+        this.setState({
+            error: errString
+        });
+    }
+
     // This needs to be async because it uses getOptions
     async onEnter(event) {
-        if (event.keyCode === 13) {
-            var numPeople = parseInt(this.state.people, 10);
-            this.setState({people: ''})
-            if (isNaN(numPeople)) {
-                console.log('Bad human');
-                return;
+        if ( event.keyCode !== 13 )
+        {
+            return;
+        }
+
+        var numPeople = parseInt(this.state.people, 10);
+        this.setState({people: ''})
+        if (isNaN(numPeople)) {
+            this.setError("Not a number");
+            return;
+        }
+
+        let options = await this.props.getOptions();
+        if (options == null) {
+            this.setError("Failed to load options, try again");
+            return;
+        }
+
+        var found = false;
+        for (let i = 0; i < options.boards.length; i++) {
+            // This adds a string because numPeople is an int, and 
+            // boards[i] is not
+            if (numPeople+'' === options.boards[i]) {
+                found = true;
             }
-            let options = await this.props.getOptions();
-            if (options == null) {
-                console.log(options);
-                return;
-            }
-            var found = false;
-            var i;
-            for (i = 0; i < options.boards.length; i++) {
-                // This adds a string because numPeople is an int, and 
-                // boards[i] is not
-                if (numPeople+'' === options.boards[i]) {
-                    found = true;
-                }
-            }
-            if (found) {
-                this.props.loadForm(numPeople);
-            } else {
-                let error = "Sorry, we can't do that";
-                this.setState({error: error});
-            }
+        }
+
+        if (found) {
+            this.props.loadForm(numPeople);
+        } else {
+            this.setError("Sorry, we can't do that")
         }
     }
 
@@ -62,7 +72,7 @@ class Greeting extends Component {
             return;
         }
 
-        this.setState({people: str, error: ''});
+        this.setState({people: str});
     }
 
     render() {
