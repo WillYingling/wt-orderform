@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import proxy from '../../../../ServerProxy';
+
 import './PersonOptions.css'
 
 class PersonOptions extends Component {
@@ -28,7 +30,6 @@ class PersonOptions extends Component {
             };
         }
 
-
         this.updateParent = this.updateParent.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleHatChange = this.handleHatChange.bind(this);
@@ -36,7 +37,7 @@ class PersonOptions extends Component {
     }
 
     async componentDidMount() {
-        let opts = await this.props.getOptions();
+        let opts = await proxy.getOptions();
         if (opts == null) {
             return;
         }
@@ -201,7 +202,7 @@ class PersonOptions extends Component {
            <div className="snowmanfields alignRow center opaque">
 
                <div className="alignRow space-around">
-                    <legend className="legend">Person #{this.props.id+1}</legend>
+                    <legend className="legend">#{this.props.id+1}</legend>
 
                     <div id="namefield" className="field alignCol">
                         <u> Name </u>

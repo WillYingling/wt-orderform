@@ -11,7 +11,6 @@ class App extends Component {
         this.state = {
             isForm: false,
             numPeople: 0,
-            options: [],
         }
 
         this.loadGreeting = this.loadGreeting.bind(this);
@@ -25,70 +24,28 @@ class App extends Component {
         });
     }
 
-    async loadForm(i) {
-        let opts = await this.getOptions()
+    loadForm(i) {
         this.setState({
             isForm: true,
             numPeople: i,
-            options: opts,
         });
     }
 
-    async getOptions() {
-        let serverUrl = "http://" + window.location.hostname + ":8080/options";
-        let options = null;
-
-        try {
-            //let serverUrl = "http://localhost:8080/options";
-            let jsonReturned = await fetch(serverUrl, {
-                method: "GET"
-            });
-
-            options = await jsonReturned.json();
-
-        } catch (e) {
-            console.log('Error getting options: ' + serverUrl);
-            console.log(e);
-        }
-        return options;
-    }
-
-    async submitBoard( options ) {
-        let serverUrl = "http://" + window.location.hostname + ":8080/submit";
-        let response = null;
-
-        try {
-            let jsonReturned = await fetch( serverUrl, {
-                method: "POST",
-                body: JSON.stringify(options)
-            } )
-            response = await jsonReturned.json();
-        }
-        catch( e ) {
-            console.log('Error submitting board: ' + serverUrl)
-            console.log(e);
-        }
-
-        return response;
-    }
-
     render() {
-        if (this.state.isForm) {
-            return (
-                <Form people={this.state.numPeople}
-                    loadGreeting={this.loadGreeting}
-                    getOptions={this.getOptions}
-                    submitBoard={this.submitBoard}
-                />
-            );
-        }
-
-        return (
+        let greeter = (
             <Greeting
                 loadForm={this.loadForm}
-                getOptions={this.getOptions}
             />
         );
+
+        let form = (
+            <Form
+                people={this.state.numPeople}
+                loadGreeting={this.loadGreeting}
+            />
+        );
+
+        return this.state.isForm ? form : greeter;
     }
 }
 

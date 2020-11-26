@@ -35,7 +35,17 @@ class Form extends Component {
     }
 
     removeSidebarButton(id) {
+        let buttons = this.state.buttons;
+        let newButtons = [];
+        for (let i = 0; i < buttons.length; i++) {
+            if ( buttons[i].id !== id ) {
+               newButtons.push(buttons[i]);
+            }
+        }
 
+        this.setState({
+            buttons: newButtons,
+        });
     }
 
     addSidebarButton(button) {
@@ -55,7 +65,7 @@ class Form extends Component {
     goForward() {
         console.log("Going forward");
         if ( this.state.isReview ) {
-            this.submitOrder();
+            this.props.loadGreeting();
         } else {
             this.setState(
                 {
@@ -84,7 +94,6 @@ class Form extends Component {
     render() {
         const optsDisp = (
             <BoardOptions
-                getOptions={this.props.getOptions}
                 size={this.props.people}
                 addButton={this.addSidebarButton}
                 removeButton={this.removeSidebarButton}
@@ -95,7 +104,6 @@ class Form extends Component {
         const revDisp = (
             <Review
                 boardOptions={this.state.boardState}
-                submitBoard={this.props.submitBoard}
             />
         );
         const disp = this.state.isReview ? revDisp : optsDisp;

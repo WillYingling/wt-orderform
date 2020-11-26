@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PersonOptions from './PersonOptions/PersonOptions.js';
+import ExtraOptions from './ExtraOptions/ExtraOptions.js';
+
 import paw from '../../../images/paw.png';
+import individual from '../../../images/add-idv.png';
 
 import './BoardOptions.css';
 
@@ -10,23 +13,24 @@ class BoardOptions extends Component {
         super(props);
 
         if ( this.props.boardState !== undefined ) {
-            console.log("Using pre-defined state");
             console.log( this.props.boardState );
             this.state = this.props.boardState;
         } else {
-            console.log("Using default state");
             this.state = {
                 size: props.size,
                 peopleOpts: Array(props.size),
                 extras: [],
-                title: 'Merry Christmas!',
-                titleChanged: false,
+                title: '',
             };
         }
 
         this.addDog = this.addDog.bind(this);
+        this.addIndividual = this.addIndividual.bind(this);
+        this.addExtra = this.addExtra.bind(this);
+
         this.handlePersonChange = this.handlePersonChange.bind(this);
         this.handleTitleChange = this.handleTitleChange.bind(this);
+        this.handleExtraChange = this.handleExtraChange.bind(this);
         this.updateParent = this.updateParent.bind(this);
     }
 
@@ -39,10 +43,45 @@ class BoardOptions extends Component {
                 alt: "Add a dog",
             }
         );
+        this.props.addButton(
+            {
+                src: individual,
+                id: "idvplus",
+                action: this.addIndividual,
+                alt: "Add a snowman",
+            }
+        );
+    }
+
+    componentWillUnmount() {
+        this.props.removeButton("dogplus");
+        this.props.removeButton("idvplus");
     }
 
     addDog() {
-        console.log('Dog added');
+        this.addExtra("Dog");
+    }
+
+    addIndividual() {
+        this.addExtra("Individual")
+    }
+
+    addExtra( type ) {
+        let extras = this.state.extras;
+
+        extras.push(
+            {
+                type: type,
+                name: "",
+                notes: ""
+            }
+        );
+
+        this.setState(
+            {
+                extras: extras
+            }
+        );
     }
 
     handlePersonChange(i, opts) {
@@ -56,16 +95,23 @@ class BoardOptions extends Component {
         );
     }
 
-    handleTitleChange(event) {
-        let newTitle = event.target.value;
-        if (!this.state.titleChanged) {
-            newTitle = '';
-        }
+    handleExtraChange(i, opts) {
+        let newExtra = this.state.extras;
+        newExtra[i] = opts;
 
         this.setState(
             {
+                extras: newExtra
+            },
+            this.updateParent,
+        );
+    }
+
+    handleTitleChange(event) {
+        let newTitle = event.target.value;
+        this.setState(
+            {
                 title: newTitle,
-                titleChanged: true,
             },
             this.updateParent,
         );
@@ -83,8 +129,19 @@ class BoardOptions extends Component {
                     key={i}
                     id={i}
                     personState={this.state.peopleOpts[i]}
-                    getOptions={this.props.getOptions}
                     change={this.handlePersonChange}
+                />
+            );
+        }
+
+        const extras = [];
+        for ( let i = 0; i < this.state.extras.length; i++ ) {
+            extras.push(
+                <ExtraOptions
+                    key={i}
+                    id={i}
+                    state={this.state.extras[i]}
+                    change={this.handleExtraChange}
                 />
             );
         }
@@ -94,11 +151,16 @@ class BoardOptions extends Component {
 
                 <div id="title" className="outlined opaque center alignCol">
                     <u> Board Title </u>
-                    <input type="text" value={this.state.title} onChange={this.handleTitleChange}/>
+                    <input type="text"
+                        placeholder="Merry Christmas!"
+                        value={this.state.title}
+                        onChange={this.handleTitleChange}
+                    />
                 </div>
 
                 {people}
 
+                {extras}
             </div>
         );
     }

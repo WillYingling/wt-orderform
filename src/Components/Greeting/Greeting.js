@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+import proxy from '../../ServerProxy';
 import './Greeting.css'
 
 class Greeting extends Component {
@@ -43,7 +44,8 @@ class Greeting extends Component {
             return;
         }
 
-        let options = await this.props.getOptions();
+        console.log(proxy);
+        let options = await proxy.getOptions();
         if (options == null) {
             this.setError("Failed to load options, try again");
             return;
@@ -90,6 +92,7 @@ class Greeting extends Component {
                             className="outlined"
                             id="people-input"
                             type="text" 
+                            autoComplete="off"
                             value={this.state.people} 
                             onChange={this.handleChange} />
 
